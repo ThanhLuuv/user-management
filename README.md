@@ -27,7 +27,7 @@ Dự án full-stack được xây dựng với:
 
 #### 1. Clone repository và di chuyển vào thư mục dự án
 ```bash
-git clone https://github.com/ThanhLuuv/user-management.git
+git clone --recurse-submodules https://github.com/ThanhLuuv/user-management.git
 cd user-management
 ```
 
@@ -35,18 +35,22 @@ cd user-management
 ```bash
 docker-compose up --build -d
 ```
+#### 3. Chạy migration để tạo bảng key
+```bash
+docker-compose exec backend php artisan key:generate
+```
 
-#### 3. Chạy migration để tạo bảng database
+#### 4. Chạy migration để tạo bảng database
 ```bash
 docker-compose exec backend php artisan migrate
 ```
 
-#### 4. (Tùy chọn) Seed dữ liệu mẫu
+#### 5. (Tùy chọn) Seed dữ liệu mẫu
 ```bash
 docker-compose exec backend php artisan db:seed
 ```
 
-#### 5. Truy cập ứng dụng
+#### 6. Truy cập ứng dụng
 - **Frontend**: http://localhost
 - **Backend API**: http://localhost/api
 - **Database**: localhost:3306
