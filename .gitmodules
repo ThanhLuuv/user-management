@@ -1,0 +1,6 @@
+[submodule "user-management-backend"]
+	path = user-management-backend
+	url = https://github.com/ThanhLuuv/user-management-backend.git
+[submodule "user-management-react"]
+	path = user-management-react
+	url = https://github.com/ThanhLuuv/user-management-react.git
