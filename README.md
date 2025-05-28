@@ -37,31 +37,12 @@ cd user-management-backend
 cp .env.example .env
 ```
 
-#### 3. Build và khởi chạy tất cả container
+#### 3. Trở lại thư mục dự án để Build và khởi chạy tất cả container
 ```bash
+cd ..
 docker-compose up --build -d
 ```
-#### 4. Chạy migration để tạo bảng key
-```bash
-docker-compose exec backend php artisan key:generate
-```
-
-#### 5. Chạy jwt:secret để tạo secret
-```bash
-docker-compose exec backend php artisan jwt:secret
-```
-
-#### 6. Chạy migration để tạo bảng database
-```bash
-docker-compose exec backend php artisan migrate
-```
-
-#### 7. (Tùy chọn) Seed dữ liệu mẫu
-```bash
-docker-compose exec backend php artisan db:seed
-```
-
-#### 8. Truy cập ứng dụng
+#### 4. Truy cập ứng dụng
 - **Frontend**: http://localhost/
 - **Backend API**: http://localhost/backend
 - **Database**: localhost:3306
@@ -114,6 +95,9 @@ php artisan migrate
 
 # (Tùy chọn) Seed dữ liệu
 php artisan db:seed
+
+# Tạo secret cho jwt
+php artisan jwt:secret
 
 # Khởi chạy server
 php artisan serve
