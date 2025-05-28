@@ -43,9 +43,14 @@ cd ..
 docker-compose up --build -d
 ```
 #### 4. Truy cập ứng dụng
-- **Frontend**: http://localhost/
-- **Backend API**: http://localhost/backend
-- **Database**: localhost:3306
+
+- **Frontend**: [http://localhost/](http://localhost/)
+- **Backend API**: [http://localhost/backend](http://localhost/backend)
+- **Database**: `localhost:3306`
+
+##### Tài khoản quản trị (Admin)
+- **Email**: `admin@example.com`
+- **Mật khẩu**: `admin123`
 
 ### Phương pháp 2: Chạy thủ công
 
