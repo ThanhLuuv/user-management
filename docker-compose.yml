@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: laravel_db
+      MYSQL_DATABASE: laravel_db_user_mn
       MYSQL_USER: laravel_user
       MYSQL_PASSWORD: laravel_pass
     volumes:
@@ -20,31 +20,30 @@ services:
       retries: 5
 
   backend:
-    build:
+    build: 
       context: ./user-management-backend
       dockerfile: Dockerfile
     platform: linux/amd64
     container_name: laravel-backend
-    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./user-management-backend:/var/www/html
     environment:
       APP_NAME: Laravel
       APP_ENV: local
-      APP_KEY: base64:your-app-key-here # Thay bằng output từ `php artisan key:generate --show`
       APP_DEBUG: true
       APP_URL: http://localhost
       DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: 3306
-      DB_DATABASE: laravel_db
+      DB_DATABASE: laravel_db_user_mn
       DB_USERNAME: laravel_user
-      DB_PASSWORD: laravel_pass
-    volumes:
-      - ./user-management-backend:/var/www/html
+      DB_PASSWORD: laravel_pass      
     depends_on:
       mysql:
         condition: service_healthy
-    ports:
-      - "8000:8000"
+    restart: unless-stopped
 
   frontend:
     build:
@@ -54,7 +53,7 @@ services:
     container_name: react-frontend
     restart: unless-stopped
     environment:
-      - REACT_APP_API_URL=/api/
+      - REACT_APP_API_URL=/backend
     ports:
       - "3000:3000"
     volumes:

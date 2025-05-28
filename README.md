@@ -31,28 +31,39 @@ git clone --recurse-submodules https://github.com/ThanhLuuv/user-management.git
 cd user-management
 ```
 
-#### 2. Build và khởi chạy tất cả container
+#### 2. Di chuyển vào thư mục backend và copy file .env.example thành file .env
+```bash
+cd user-management-backend
+cp .env.example .env
+```
+
+#### 3. Build và khởi chạy tất cả container
 ```bash
 docker-compose up --build -d
 ```
-#### 3. Chạy migration để tạo bảng key
+#### 4. Chạy migration để tạo bảng key
 ```bash
 docker-compose exec backend php artisan key:generate
 ```
 
-#### 4. Chạy migration để tạo bảng database
+#### 5. Chạy jwt:secret để tạo secret
+```bash
+docker-compose exec backend php artisan jwt:secret
+```
+
+#### 6. Chạy migration để tạo bảng database
 ```bash
 docker-compose exec backend php artisan migrate
 ```
 
-#### 5. (Tùy chọn) Seed dữ liệu mẫu
+#### 7. (Tùy chọn) Seed dữ liệu mẫu
 ```bash
 docker-compose exec backend php artisan db:seed
 ```
 
-#### 6. Truy cập ứng dụng
-- **Frontend**: http://localhost
-- **Backend API**: http://localhost/api
+#### 8. Truy cập ứng dụng
+- **Frontend**: http://localhost/
+- **Backend API**: http://localhost/backend
 - **Database**: localhost:3306
 
 ### Phương pháp 2: Chạy thủ công
@@ -81,13 +92,22 @@ cp .env.example .env
 # Tạo application key
 php artisan key:generate
 
+# Tạo jwt:secret
+php artisan jwt:secret
+
 # Cấu hình database trong .env
-# DB_CONNECTION=mysql
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=laravel_app
-# DB_USERNAME=laravel_user
-# DB_PASSWORD=password
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:xxxxx
+APP_DEBUG=true
+LOG_LEVEL=debug
+APP_URL=http://localhost
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel_db_user
+DB_USERNAME=laravel_user
+DB_PASSWORD=laravel_pass
 
 # Chạy migration
 php artisan migrate
@@ -151,26 +171,6 @@ docker-compose exec backend composer <command>
 docker-compose exec frontend npm <command>
 ```
 
-## Cấu trúc thư mục
-
-```
-project-root/
-├── user-management-backend/               
-│   ├── app/
-│   ├── config/
-│   ├── database/
-│   ├── routes/
-│   └── ...
-├── user-management-react/           
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── ...
-├── nginx/                
-├── docker-compose.yml
-└── README.md
-```
-
 ## Cấu hình
 
 ### Environment Variables
@@ -193,8 +193,8 @@ DB_PASSWORD=password
 
 #### Frontend (.env)
 ```env
-REACT_APP_API_URL=http://localhost/api  # Docker
-# REACT_APP_API_URL=http://localhost:8000/api  # Local
+REACT_APP_API_URL=http://localhost/backend # Docker
+# REACT_APP_API_URL=http://localhost:8000/  # Local
 ```
 
 ## Testing
@@ -212,8 +212,7 @@ docker-compose exec frontend npm test
 ## API Documentation
 
 API endpoints có thể được truy cập tại:
-- Base URL: `http://localhost/api` (Docker) hoặc `http://localhost:8000/api` (Local)
-- Swagger/OpenAPI: `http://localhost/api/documentation` (nếu đã cài đặt)
+- Base URL: `http://localhost/backend` (Docker) hoặc `http://localhost:8000/api` (Local)
 
 ## Troubleshooting
 
@@ -240,13 +239,6 @@ docker-compose up --build
 - Kiểm tra CORS configuration trong Laravel
 - Kiểm tra network connection giữa containers
 
-## Đóng góp
-
-1. Fork repository
-2. Tạo feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Tạo Pull Request
 
 ## Hỗ trợ
 
@@ -262,5 +254,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Phiên bản**: 1.0.0  
-**Cập nhật lần cuối**: $(date)  
+**Cập nhật lần cuối**: 28/05/2025
 **Tác giả**: ThanhLuuv
